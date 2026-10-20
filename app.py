@@ -271,10 +271,13 @@ with tab_word:
         )
 
         word_pil = None
+        input_id = "default"
         if uploaded_word is not None:
             word_pil = Image.open(uploaded_word)
+            input_id = f"uploaded_{uploaded_word.name}_{uploaded_word.size}"
         elif selected_sample != "None (Upload your own)" and selected_sample in sample_map:
             word_pil = Image.open(sample_map[selected_sample])
+            input_id = f"sample_{selected_sample}"
 
         if word_pil is not None:
             st.caption("Uploaded Word Image")
@@ -310,7 +313,7 @@ with tab_word:
             </div>
             """, unsafe_allow_html=True)
 
-            st.text_input("📋 Editable Digital Output", value=final_text, key="digital_out")
+            st.text_input("📋 Editable Digital Output", value=final_text, key=f"digital_out_{input_id}")
 
             st.markdown("#### Character-by-Character Breakdown")
             seg_cols = st.columns(min(len(segment_details), 6))
