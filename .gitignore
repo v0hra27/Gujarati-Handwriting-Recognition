@@ -1,0 +1,31 @@
+# Python Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Large Archives & Redundant Data
+*.zip
+*.tar.gz
+*.rar
+data/characters/source/output_boxes/
+data/characters/source/output_boxes.zip
+data/characters/source/preprocessed_images.zip
+
+# Old 432-Class Baseline Model (27.6MB, superseded by gujarati_core_cnn.keras)
+models/gujarati_character_cnn.keras
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor Configs
+.vscode/
+.idea/

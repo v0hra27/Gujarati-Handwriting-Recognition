@@ -1,0 +1,8 @@
+{
+  "classes": 432,
+  "images": 3330,
+  "train_images": 2664,
+  "validation_images": 666,
+  "best_validation_accuracy": 0.0030030030757188797,
+  "best_validation_loss": 6.068742275238037
+}
