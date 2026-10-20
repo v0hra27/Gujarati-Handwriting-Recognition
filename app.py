@@ -103,6 +103,14 @@ with st.sidebar:
     st.success("✅ **Core Gujarati CNN Active**\n- 47 Classes (12 Vowels + 35 Base Consonants)\n- Trained with Multi-Font Generalization\n- **~83% Real-World Handwriting Accuracy**")
 
     st.divider()
+    st.markdown("### 👨‍💻 Project Details")
+    st.markdown("""
+    **Student:** Mohammadkaif Vahora  
+    **ID:** `23IT475` | **Division:** `D10`  
+    **Course:** Machine Learning (`4IT47`) — Sem 7
+    """)
+
+    st.divider()
     st.markdown("### 🛠️ Preprocessing")
     enable_auto_crop = st.checkbox("Auto-crop & center characters", value=True, help="Automatically centers the character and eliminates edge noise.")
     min_contour_area = st.slider("Min character area (noise threshold)", min_value=15, max_value=150, value=40, step=5)

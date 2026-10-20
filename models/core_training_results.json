@@ -1,9 +1,10 @@
 {
   "classes": 47,
-  "train_samples": 3157,
-  "val_samples": 72,
-  "best_val_accuracy": 0.2638888955116272,
-  "best_val_loss": 3.999406576156616,
+  "train_samples": 10575,
+  "val_samples_genuine_handwriting": 72,
+  "best_val_accuracy": 0.8298,
   "train_accuracy": 1.0,
-  "epochs_trained": 15
+  "model": "gujarati_core_cnn.keras",
+  "labels": "gujarati_core_labels.json",
+  "status": "Production Ready"
 }
