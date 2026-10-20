@@ -38,10 +38,60 @@ WORDS = [
         "name": "bharat",
         "gujarati": "ભરત",
         "boxes": [("box_264", "2.png"), ("box_300", "2.png"), ("box_168", "6.png")]
+    },
+    {
+        "name": "gagan",
+        "gujarati": "ગગન",
+        "boxes": [("box_36", "1.png"), ("box_36", "2.png"), ("box_216", "2.png")]
+    },
+    {
+        "name": "raman",
+        "gujarati": "રમણ",
+        "boxes": [("box_300", "1.png"), ("box_276", "1.png"), ("box_156", "1.png")]
+    },
+    {
+        "name": "nagar",
+        "gujarati": "નગર",
+        "boxes": [("box_216", "1.png"), ("box_36", "1.png"), ("box_300", "2.png")]
+    },
+    {
+        "name": "janak",
+        "gujarati": "જનક",
+        "boxes": [("box_84", "1.png"), ("box_216", "2.png"), ("box_12", "1.png")]
+    },
+    {
+        "name": "madad",
+        "gujarati": "મદદ",
+        "boxes": [("box_276", "2.png"), ("box_192", "1.png"), ("box_192", "2.png")]
+    },
+    {
+        "name": "das",
+        "gujarati": "દસ",
+        "boxes": [("box_192", "1.png"), ("box_360", "1.png")]
+    },
+    {
+        "name": "pag",
+        "gujarati": "પગ",
+        "boxes": [("box_228", "1.png"), ("box_36", "2.png")]
+    },
+    {
+        "name": "taras",
+        "gujarati": "તરસ",
+        "boxes": [("box_168", "2.png"), ("box_300", "1.png"), ("box_360", "2.png")]
+    },
+    {
+        "name": "pavan",
+        "gujarati": "પવન",
+        "boxes": [("box_228", "2.png"), ("box_324", "1.png"), ("box_216", "1.png")]
+    },
+    {
+        "name": "nayan",
+        "gujarati": "નયન",
+        "boxes": [("box_216", "1.png"), ("box_288", "1.png"), ("box_216", "2.png")]
     }
 ]
 
-print("Regenerating sample words with clean glyphs...")
+print("Generating 15 verified handwritten sample words...")
 for w_info in WORDS:
     loaded = []
     for box, filename in w_info["boxes"]:
@@ -54,7 +104,7 @@ for w_info in WORDS:
             loaded.append(Image.open(p))
 
     if len(loaded) == len(w_info["boxes"]):
-        spacing = 20
+        spacing = 22
         total_w = sum(im.width for im in loaded) + spacing * (len(loaded) + 1)
         max_h = max(im.height for im in loaded) + 30
 
@@ -68,4 +118,4 @@ for w_info in WORDS:
         canvas.save(out_file)
         print(f"Generated: {w_info['name']}.png ({w_info['gujarati']})")
 
-print(f"\nAll clean sample words ready in: {SAMPLE_DIR.resolve()}")
+print(f"\nAll 15 sample words ready in: {SAMPLE_DIR.resolve()}")

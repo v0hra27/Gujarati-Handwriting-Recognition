@@ -249,7 +249,17 @@ with tab_word:
             "saral.png": "સરળ (saral.png)",
             "kalam.png": "કલમ (kalam.png)",
             "vatan.png": "વતન (vatan.png)",
-            "bharat.png": "ભરત (bharat.png)"
+            "bharat.png": "ભરત (bharat.png)",
+            "gagan.png": "ગગન (gagan.png)",
+            "raman.png": "રમણ (raman.png)",
+            "nagar.png": "નગર (nagar.png)",
+            "janak.png": "જનક (janak.png)",
+            "madad.png": "મદદ (madad.png)",
+            "das.png": "દસ (das.png)",
+            "pag.png": "પગ (pag.png)",
+            "taras.png": "તરસ (taras.png)",
+            "pavan.png": "પવન (pavan.png)",
+            "nayan.png": "નયન (nayan.png)"
         }
 
         if samples_dir.exists():
