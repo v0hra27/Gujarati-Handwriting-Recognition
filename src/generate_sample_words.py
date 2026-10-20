@@ -7,7 +7,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
 import numpy as np
 from PIL import Image
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path("D:/Kaif/Sem7/ML/Gujarati-Handwriting-Recognition")
 DATA_DIR = ROOT / "data" / "characters" / "source" / "preprocessed_images"
 SAMPLE_DIR = ROOT / "data" / "sample_images"
 SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
@@ -42,7 +42,7 @@ WORDS = [
     {
         "name": "gagan",
         "gujarati": "ગગન",
-        "boxes": [("box_36", "1.png"), ("box_36", "2.png"), ("box_216", "2.png")]
+        "boxes": [("box_36", "1.png"), ("box_36", "1.png"), ("box_216", "2.png")]
     },
     {
         "name": "raman",
@@ -72,12 +72,12 @@ WORDS = [
     {
         "name": "pag",
         "gujarati": "પગ",
-        "boxes": [("box_228", "1.png"), ("box_36", "2.png")]
+        "boxes": [("box_228", "1.png"), ("box_36", "1.png")]
     },
     {
         "name": "taras",
         "gujarati": "તરસ",
-        "boxes": [("box_168", "2.png"), ("box_300", "1.png"), ("box_360", "2.png")]
+        "boxes": [("box_168", "5.png"), ("box_300", "1.png"), ("box_360", "2.png")]
     },
     {
         "name": "pavan",
@@ -91,7 +91,7 @@ WORDS = [
     }
 ]
 
-print("Generating 15 verified handwritten sample words...")
+print("Regenerating 15 clean, verified sample words...")
 for w_info in WORDS:
     loaded = []
     for box, filename in w_info["boxes"]:

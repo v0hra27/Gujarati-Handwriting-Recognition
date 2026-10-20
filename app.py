@@ -13,7 +13,12 @@ import streamlit as st
 import numpy as np
 import tensorflow as tf
 from PIL import Image, ImageOps
+import importlib
+import src.preprocessing
+import src.segmentation
 
+importlib.reload(src.preprocessing)
+importlib.reload(src.segmentation)
 from src.preprocessing import preprocess_character_image, to_model_input
 from src.segmentation import segment_word_into_characters
 
@@ -114,6 +119,7 @@ with st.sidebar:
     st.markdown("### 🛠️ Preprocessing")
     enable_auto_crop = st.checkbox("Auto-crop & center characters", value=True, help="Automatically centers the character and eliminates edge noise.")
     min_contour_area = st.slider("Min character area (noise threshold)", min_value=15, max_value=150, value=40, step=5)
+    merge_gap = st.slider("Stroke merge distance (px)", min_value=8, max_value=32, value=20, step=2, help="Merges split strokes belonging to the same letter (e.g. the loop and bar of 'ગ').")
     
     if st.button("🔄 Reload Model & Reset Cache", use_container_width=True):
         st.cache_resource.clear()
@@ -173,18 +179,46 @@ with tab_char:
     col_u, col_r = st.columns([1, 1], gap="large")
 
     with col_u:
-        st.subheader("1. Upload Character Image")
+        st.subheader("1. Select or Upload Character")
+        
+        char_choices = ["None (Upload your own)"]
+        char_box_map = {}
+        data_chars_dir = BASE_DIR / "data" / "characters" / "source" / "preprocessed_images"
+        
+        for _, info in sorted(label_data.items(), key=lambda x: int(x[0])):
+            c_symbol = info.get("character", "?")
+            b_key = info.get("box_key", "")
+            lbl = f"{c_symbol}  ({b_key})"
+            char_choices.append(lbl)
+            char_box_map[lbl] = b_key
+
+        selected_char_sample = st.selectbox(
+            "🖼️ Select any of the 47 Gujarati characters to test:",
+            options=char_choices,
+            index=1,
+            key="sample_char_selector"
+        )
+
         uploaded_char = st.file_uploader(
-            "Choose a character image",
+            "Or upload a custom character image",
             type=["png", "jpg", "jpeg", "bmp"],
             key="char_uploader"
         )
 
+        raw_img = None
         if uploaded_char is not None:
             raw_img = Image.open(uploaded_char)
+        elif selected_char_sample != "None (Upload your own)" and selected_char_sample in char_box_map:
+            b_folder = data_chars_dir / char_box_map[selected_char_sample]
+            if b_folder.exists():
+                c_files = sorted(b_folder.glob("*.png"))
+                if c_files:
+                    raw_img = Image.open(c_files[0])
+
+        if raw_img is not None:
             p1, p2 = st.columns(2)
             with p1:
-                st.caption("Uploaded Original")
+                st.caption("Selected / Uploaded Character")
                 st.image(raw_img, use_container_width=True)
 
             char, box, probs, clean_preview = predict_single_crop(raw_img)
@@ -195,8 +229,8 @@ with tab_char:
 
     with col_r:
         st.subheader("2. Recognition Output")
-        if uploaded_char is None:
-            st.info("👈 Please upload a character image on the left to see the prediction.")
+        if raw_img is None:
+            st.info("👈 Please select a character from the dropdown or upload an image on the left.")
         else:
             best_idx = int(np.argmax(probs))
             conf = probs[best_idx] * 100
@@ -300,7 +334,9 @@ with tab_word:
             st.info("👈 Upload a handwritten word image or select a sample from the left panel.")
         else:
             with st.spinner("Segmenting characters and predicting..."):
-                crops, boxes, annotated = segment_word_into_characters(word_pil, min_area=min_contour_area)
+                crops, boxes, annotated = segment_word_into_characters(
+                    word_pil, min_area=min_contour_area, max_gap_merge=merge_gap
+                )
 
             st.caption("Detected Character Segments (Left to Right)")
             st.image(annotated, use_container_width=True)

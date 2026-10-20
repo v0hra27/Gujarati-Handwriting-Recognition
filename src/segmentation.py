@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from PIL import Image
 
-def segment_word_into_characters(image_input, min_area=40, max_gap_merge=8):
+def segment_word_into_characters(image_input, min_area=40, max_gap_merge=16):
     """
     Segments a handwritten Gujarati word image into individual characters.
     Features:
@@ -40,12 +40,12 @@ def segment_word_into_characters(image_input, min_area=40, max_gap_merge=8):
 
         x, y, w, h = cv2.boundingRect(cnt)
 
-        # Filter out horizontal ruling lines (e.g. from lined notebook paper or scan grid)
+        # Filter out horizontal ruling lines (notebook paper or scan grid)
         aspect_ratio = w / max(1, h)
-        if aspect_ratio > 3.5 and h <= 10:
+        if aspect_ratio > 4.0 and h <= 8:
             continue
-        # Filter out vertical margin lines
-        if (h / max(1, w)) > 5.0 and w <= 6:
+        # Filter out vertical margin lines that span full page height
+        if h > 0.85 * img_np.shape[0] and (h / max(1, w)) > 6.0 and w <= 4:
             continue
 
         boxes.append((x, y, w, h))
